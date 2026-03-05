@@ -17,10 +17,14 @@ cd NTL-SysToolbox
 python -m venv .venv
 
 # Linux
+# Installer pip : apt install pip -y
 source .venv/bin/activate
 
 # Windows (PowerShell)
 # .\.venv\Scripts\Activate.ps1
+
+# Sur Linux : python3 setup.py
+python setup.py
 
 pip install -U pip
 pip install -e .
