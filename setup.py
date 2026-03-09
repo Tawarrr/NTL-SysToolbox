@@ -1,3 +1,4 @@
+# PLUS UTILE GRACE AU REQUIREMENTS.TXT
 import sys
 import subprocess
 import platform

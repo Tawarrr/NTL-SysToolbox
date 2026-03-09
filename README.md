@@ -15,16 +15,22 @@
 git clone https://github.com/Tawarrr/NTL-SysToolbox.git
 cd NTL-SysToolbox
 python -m venv .venv
-
+```
 # Linux
+# Installer venv : apt install python3-venv -y
 # Installer pip : apt install pip -y
+```bash
 source .venv/bin/activate
-
+```
 # Windows (PowerShell)
 # .\.venv\Scripts\Activate.ps1
 
-# Sur Linux : python3 setup.py
-python setup.py
+# Sur Linux : nano requirements.txt (modules python à installer)
+```bash
+pip install -r requirements.txt
+```
 
+```bash
 pip install -U pip
 pip install -e .
+```
