@@ -23,15 +23,24 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 # Windows (PowerShell)
-### `.\.venv\Scripts\Activate.ps1`
+### Installer venv
+### Installer pip
+
+```powershell
+`.\.venv\Scripts\Activate.ps1`
+```
+
+### Sur Windows
 ```powershell
 pip install -r requirements.txt
 ```
+
 ### Sur Linux : `nano requirements.txt` (modules python à installer)
 ```bash
 pip install -r requirements.txt
 ```
 
+### Sur les deux
 ```bash
 pip install -U pip
 pip install -e .
