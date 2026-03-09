@@ -24,7 +24,9 @@ source .venv/bin/activate
 ```
 # Windows (PowerShell)
 ### `.\.venv\Scripts\Activate.ps1`
-
+```powershell
+pip install -r requirements.txt
+```
 ### Sur Linux : `nano requirements.txt` (modules python à installer)
 ```bash
 pip install -r requirements.txt
