@@ -1,2 +1,3 @@
 psutil
 pymysql
+python-nmap
