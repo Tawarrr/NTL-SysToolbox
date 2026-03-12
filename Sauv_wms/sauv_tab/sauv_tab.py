@@ -8,12 +8,6 @@ import os
 import sys
 import getpass
 from datetime import datetime
-
-try:
-    import pymysql
-except ImportError:
-    print("[ERREUR] pymysql n'est pas installé. Lancez setup.py")
-    sys.exit(1)
     
 def connect_to_database():
     """Demande les infos de connexion et retourne (connexion, base, host, port)."""
