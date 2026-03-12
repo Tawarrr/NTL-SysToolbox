@@ -14,12 +14,12 @@
 ```bash
 git clone https://github.com/Tawarrr/NTL-SysToolbox.git
 cd NTL-SysToolbox
-python -m venv .venv
 ```
 # Sur Linux
-### Installer venv : apt install python3-venv -y
-### Installer pip : apt install pip -y
+#### Installer venv : apt install python3-venv -y
+#### Installer pip : apt install pip -y
 ```bash
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 #### Installer les dépendandes avec le fichier `requirements.txt`
@@ -29,10 +29,11 @@ pip install -r requirements.txt
 
 
 # Sur Windows (PowerShell)
-### Installer venv
-### Installer pip
+#### Installer venv
+#### Installer pip
 
 ```powershell
+python3 -m venv .venv
 `.\.venv\Scripts\Activate.ps1`
 ```
 #### Installer les dépendandes avec le fichier `requirements.txt`
@@ -46,3 +47,4 @@ pip install -r requirements.txt
 pip install -U pip
 pip install -e .
 ``
+
