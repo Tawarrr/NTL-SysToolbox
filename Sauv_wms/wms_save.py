@@ -1,53 +1,45 @@
 import sys
-import platform
 import os
 
-# filepath: g:\MACHINES MSPR\MSPR\NTL-SysToolbox\Sauv_wms\Sauvs.py
-
-
-
 def main():
-    """Main function to choose between different WMS backup options"""
     print("\n" + "="*60)
-    print("     NTL-SysToolbox - Sauvegardes WMS")
+    print("      NTL-SysToolbox - Sauvegardes WMS")
     print("="*60 + "\n")
-    
+
     print("Sélectionnez la sauvegarde que vous souhaitez faire:")
     print("1. Sauvegarde Base de données en SQL")
     print("2. Sauvegarde table en CSV")
     print("3. Quitter")
-    
+
     try:
         choice = input("\nFaites votre choix (1, 2 ou 3): ").strip()
-        
+
+        # Construction du chemin pour que Python trouve les sous-dossiers
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        if current_dir not in sys.path:
+            sys.path.append(current_dir)
+
         if choice == "1":
-            print("\n--- Sauvegarde Base de données en SQL ---\n")
-            sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-            from sauv_bdd.sauv_bdd import connect_to_database 
-            return connect_to_database()#ici je met les def qu'il y a dans l'autres fichier sauv_bdd.py 
-            
-            
+            print("\n--- Lancement : Sauvegarde SQL ---\n")
+            # Importation depuis Sauv_wms/sauv_bdd/sauv_bdd.py
+            from sauv_bdd.sauv_bdd import sauvegarder_bdd_sql
+            return sauvegarder_bdd_sql()
+
         elif choice == "2":
-            print("\n--- Sauvegarde table en CSV ---\n")
-            sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-            from sauv_tab.sauv_tab import save_table_to_CSV 
-            return save_table_to_CSV () #ici je met les def qu'il y a dans l'autres fichier sauv_tab.py 
-            
-            
+            print("\n--- Lancement : Sauvegarde CSV ---\n")
+            # Importation depuis Sauv_wms/sauv_tab/sauv_tab.py
+            from sauv_tab.sauv_tab import save_table_to_CSV
+            return save_table_to_CSV()
+
         elif choice == "3":
-            print("\nAu revoir!")
-            sys.exit(0)
-            
+            return
+
         else:
-            print("Choix invalide. Veuillez entrer 1, 2 ou 3.")
+            print("Choix invalide.")
             main()
-            
-    except KeyboardInterrupt:
-        print("\n\nProgramme interrompu par l'utilisateur.")
-        sys.exit(0)
+
     except Exception as e:
-        print(f"Erreur: {e}")
-        sys.exit(1)
+        print(f"Erreur lors de l'appel du module : {e}")
 
 if __name__ == "__main__":
     main()
