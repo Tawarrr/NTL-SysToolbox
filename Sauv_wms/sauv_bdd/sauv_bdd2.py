@@ -39,9 +39,8 @@ def sauvegarder_bdd_sql():
 
     try:
         print(f"Début de la sauvegarde de '{nom_bd}'...")
-        
+
         with open(chemin_complet, 'w', encoding='utf-8') as f:
-            # En-tête pour désactiver les clés étrangères (évite les erreurs d'import)
             f.write(f"-- Sauvegarde Base de données : {nom_bd}\n")
             f.write(f"-- Date : {datetime.now()}\n")
             f.write("SET FOREIGN_KEY_CHECKS = 0;\n\n")
@@ -53,7 +52,7 @@ def sauvegarder_bdd_sql():
 
                 for table in tables:
                     print(f"  -> Traitement de la table : {table}")
-                    
+
                     # 3. Sauvegarder la structure (CREATE TABLE)
                     cur.execute(f"SHOW CREATE TABLE `{table}`")
                     structure = cur.fetchone()[1]
@@ -64,26 +63,26 @@ def sauvegarder_bdd_sql():
                     # 4. Sauvegarder les données (INSERT INTO)
                     cur.execute(f"SELECT * FROM `{table}`")
                     lignes = cur.fetchall()
-                    
+
                     if lignes:
                         f.write(f"INSERT INTO `{table}` VALUES ")
                         valeurs_sql = []
                         for l in lignes:
-                            # Formate chaque valeur : met des quotes ou écrit NULL
-                            valeurs_nettoyees = [f"'{str(v).replace("'", "''")}'" if v is not None else "NULL" for v in l]
-                            valeurs_sql.append(f"({','.join(valeurs_nettoyees)})")
-                        
+                            # CORRECTION ICI : Utilisation de triples guillemets pour éviter l'erreur de syntaxe
+                            v_nettoyees = [f"""'{str(v).replace("'", "''")}'""" if v is not None else "NULL" for v in l]
+                            valeurs_sql.append(f"({','.join(v_nettoyees)})")
+
                         f.write(",\n".join(valeurs_sql) + ";\n")
 
-            # Réactivation des clés étrangères
             f.write("\nSET FOREIGN_KEY_CHECKS = 1;")
 
-        print(f"\n Sauvegarde réussie : {chemin_complet}")
+        print(f"\n✅ Sauvegarde réussie : {chemin_complet}")
 
     except Exception as e:
         print(f"Erreur pendant l'export : {e}")
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     sauvegarder_bdd_sql()
