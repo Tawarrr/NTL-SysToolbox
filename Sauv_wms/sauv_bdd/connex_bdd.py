@@ -1,17 +1,24 @@
 import pymysql
 
 def connect_to_database():
-    print ("Tentative de connexion à la base de données...")
+    print("\n--- Connexion MySQL ---")
+    host = input("  Hôte / IP  : ").strip() or "WMS-APP"
+    user = input("  User [mspr] : ").strip() or "mspr"
+    password = getpass.getpass("  Password : ") # mspr
+    database = input("  Base [WMS] : ").strip() or "WMS"
+
     try:
-        connection = pymysql.connect(
-            host="localhost",
-            user="Admin_WMS",
-            password="PASSWORD",
-            database="WMS"
+        # Connexion classique sans options de curseur spéciales
+        conn = pymysql.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database,
+            port=3306,
+            connect_timeout=10
         )
-        print("Connection établie!")
-        return connection
-    except pymysql.MySQLError as e:
-        print(f"Erreur de connexion à la base de données : {e}")
+        print("Connexion OK !\n")
+        return conn
+    except Exception as e:
+        print(f"[ERREUR] : {e}")
         return None
-    
