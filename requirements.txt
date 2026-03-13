@@ -1,3 +1,4 @@
 psutil
 pymysql
 python3-nmap
+cryptography
