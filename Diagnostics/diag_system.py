@@ -15,10 +15,11 @@ def main():
     print("1. Windows")
     print("2. Linux")
     print("3. Check AD/DNS")
-    print("4. Retour au menu principal")
+    print("4. Check MySQL")
+    print("5. Retour au menu principal")
 
     try:
-        choice = input("\nFaites votre choix (1, 2 ou 3): ").strip()
+        choice = input("\nFaites votre choix (1, 2, 3, 4 ou 5): ").strip()
 
         # trouver le dossier 'Diags'
         # grâce au subprocess, __file__ est correctement défini
@@ -42,6 +43,11 @@ def main():
             executer_diagnostic()
             
         elif choice == "4":
+            print("\n--- Diagnostique AD/DNS ---\n")
+            from Diags.check_mysql import test_mysql_connection
+            test_mysql_connection()
+            
+        elif choice == "5":
             print("\nRetour...")
             return # Retourne au menu principal
 
