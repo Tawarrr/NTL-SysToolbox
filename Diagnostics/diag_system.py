@@ -14,7 +14,8 @@ def main():
     print("Sélectionnez une plateforme:")
     print("1. Windows")
     print("2. Linux")
-    print("3. Retour au menu principal")
+    print("3. Check AD/DNS")
+    print("4. Retour au menu principal")
 
     try:
         choice = input("\nFaites votre choix (1, 2 ou 3): ").strip()
@@ -34,8 +35,13 @@ def main():
             print("\n--- Diagnostique Linux ---\n")
             from Diags.platform_linux import display_system_info
             display_system_info()
-
+            
         elif choice == "3":
+            print("\n--- Diagnostique AD/DNS ---\n")
+            from Diags.check_ad import executer_diagnostic
+            executer_diagnostic()
+            
+        elif choice == "4":
             print("\nRetour...")
             return # Retourne au menu principal
 
