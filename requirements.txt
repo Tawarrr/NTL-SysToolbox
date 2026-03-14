@@ -2,3 +2,4 @@ psutil
 pymysql
 python3-nmap
 cryptography
+mysql-connector-python
