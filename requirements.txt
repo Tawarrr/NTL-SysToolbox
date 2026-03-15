@@ -6,4 +6,4 @@ python3-nmap
 cryptography
 mysql-connector-python
 pywinrm
-nmap
+python-nmap
