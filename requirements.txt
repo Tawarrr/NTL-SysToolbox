@@ -1,6 +1,7 @@
 psutil
 pymysql
 pandas
+requests
 python3-nmap
 cryptography
 mysql-connector-python
