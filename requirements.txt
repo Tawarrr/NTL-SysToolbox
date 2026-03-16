@@ -7,3 +7,4 @@ cryptography
 mysql-connector-python
 pywinrm
 python-nmap
+paramiko
