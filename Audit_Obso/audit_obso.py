@@ -1,5 +1,5 @@
 from check_os import scan_os
-from check_eol import run_eol_audit
+from check_eol import eol_dates
 
 scan_os()
-run_eol_audit()
+eol_dates()
