@@ -2,7 +2,7 @@ psutil
 pymysql
 pandas
 requests
-python3-nmap
+python-nmap
 cryptography
 mysql-connector-python
 pywinrm
