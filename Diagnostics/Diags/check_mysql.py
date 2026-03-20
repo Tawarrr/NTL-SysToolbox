@@ -1,15 +1,15 @@
-import getpass
-import pymysql
-
+import os, pymysql
+from dotenv import load_dotenv
+load_dotenv()
 def test_mysql_connection():
     print("\n--- Connexion MySQL (via PyMySQL) ---")
-    host = input("  Hôte / IP [192.168.10.21] : ").strip() or "192.168.10.21"
-    user = input("  User [admin] : ").strip() or "admin"
-    password = getpass.getpass("  Password : ")
-    database = input("  Base [WMS] : ").strip() or "WMS"
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_MDP')
+    database = os.getenv('DB_NAME')
 
     connection = None
-    
+
     try:
         connection = pymysql.connect(
             host=host,
@@ -20,7 +20,7 @@ def test_mysql_connection():
             connect_timeout=10
         )
 
-        
+
         # Utilisation d'un curseur pour récupérer les infos
         with connection.cursor() as cursor:
             # Récupérer la base actuelle
