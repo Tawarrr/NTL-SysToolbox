@@ -1,14 +1,13 @@
-import os
-import getpass
-import pymysql
+import os, pymysql
+from dotenv import load_dotenv
 from datetime import datetime
-
+load_dotenv()
 def connect_to_database():
     print("\n--- Connexion MySQL ---")
-    host = input("  Hôte / IP  : ").strip() or "WMS-APP"
-    user = input("  User [mspr] : ").strip() or "mspr"
-    password = getpass.getpass("  Password : ")
-    database = input("  Base [WMS] : ").strip() or "WMS"
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_MDP')
+    database = os.getenv('DB_NAME')
 
     try:
         conn = pymysql.connect(
@@ -30,7 +29,7 @@ def sauvegarder_bdd_sql():
     if not conn:
         return
 
-    # 1. Préparation du fichier de sortie
+    #Préparation du fichier de sortie
     dossier = "backups_sql"
     os.makedirs(dossier, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,14 +52,14 @@ def sauvegarder_bdd_sql():
                 for table in tables:
                     print(f"  -> Traitement de la table : {table}")
 
-                    # 3. Sauvegarder la structure (CREATE TABLE)
+                    # 3. Sauvegarder la structure
                     cur.execute(f"SHOW CREATE TABLE `{table}`")
                     structure = cur.fetchone()[1]
                     f.write(f"\n-- Structure de la table `{table}`\n")
                     f.write(f"DROP TABLE IF EXISTS `{table}`;\n")
                     f.write(f"{structure};\n\n")
 
-                    # 4. Sauvegarder les données (INSERT INTO)
+                    # 4. Sauvegarder les données
                     cur.execute(f"SELECT * FROM `{table}`")
                     lignes = cur.fetchall()
 
@@ -68,7 +67,6 @@ def sauvegarder_bdd_sql():
                         f.write(f"INSERT INTO `{table}` VALUES ")
                         valeurs_sql = []
                         for l in lignes:
-                            # CORRECTION ICI : Utilisation de triples guillemets pour éviter l'erreur de syntaxe
                             v_nettoyees = [f"""'{str(v).replace("'", "''")}'""" if v is not None else "NULL" for v in l]
                             valeurs_sql.append(f"({','.join(v_nettoyees)})")
 
@@ -76,7 +74,7 @@ def sauvegarder_bdd_sql():
 
             f.write("\nSET FOREIGN_KEY_CHECKS = 1;")
 
-        print(f"\n✅ Sauvegarde réussie : {chemin_complet}")
+        print(f"Sauvegarde réussie : {chemin_complet}")
 
     except Exception as e:
         print(f"Erreur pendant l'export : {e}")
