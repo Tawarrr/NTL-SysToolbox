@@ -55,8 +55,8 @@ def scan_os():
 
         categorie_os, v_majeure, v_detaillee = formater_infos_os(os_detecte)
 
-        curseur.execute("INSERT IGNORE INTO os (nom) VALUES (%s)", (categorie_os,))
-        curseur.execute("SELECT id FROM os WHERE nom=%s", (categorie_os,))
+        curseur.execute("INSERT IGNORE INTO os (nom_os) VALUES (%s)", (categorie_os,))
+        curseur.execute("SELECT id FROM os WHERE nom_os=%s", (categorie_os,))
         id_os = curseur.fetchone()[0]
 
         curseur.execute("""INSERT INTO version (os_id, ip, version, version_detail, total)
