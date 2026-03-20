@@ -23,10 +23,10 @@ def eol_dates():
     cursor = db.cursor(dictionary=True)
 
     cursor.execute("""
-        SELECT version.id, version.version, os.nom as product_name
+        SELECT version.id, version.version, os.nom_os as product_name
         FROM version
         JOIN os ON version.os_id = os.id
-        WHERE version.date_eol IS NULL AND os.nom != 'Inconnu'
+        WHERE version.date_eol IS NULL AND os.nom_os != 'Inconnu'
     """)
     versions_to_check = cursor.fetchall()
 
