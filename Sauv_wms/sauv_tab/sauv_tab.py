@@ -1,18 +1,14 @@
-import csv
-import os
-import getpass
-import pymysql
+import csv, os, pymysql
+from dotenv import load_dotenv
 from datetime import datetime
-
+load_dotenv()
 def connect_to_database():
     print("\n--- Connexion MySQL ---")
-    host = input("  Hôte / IP  : ").strip() or "WMS-APP"
-    user = input("  User [mspr] : ").strip() or "mspr"
-    password = getpass.getpass("  Password : ")
-    database = input("  Base [WMS] : ").strip() or "WMS"
-
+    host = os.getenv('DB_HOST')
+    user = os.getenv('DB_USER')
+    password = os.getenv('DB_MDP')
+    database = os.getenv('DB_NAME')
     try:
-        # Connexion classique sans options de curseur spéciales
         conn = pymysql.connect(
             host=host,
             user=user,
@@ -46,7 +42,7 @@ def save_table_to_CSV():
         if not choice.isdigit() or not (0 < int(choice) <= len(tables)):
             print("Choix invalide.")
             return
-        
+
         table = tables[int(choice) - 1]
 
         # 2. Préparation du fichier
@@ -56,17 +52,15 @@ def save_table_to_CSV():
         # 3. Exportation simple
         with conn.cursor() as cur:
             cur.execute(f"SELECT * FROM `{table}`;")
-            
-            # Récupère tout d'un coup en mémoire
             lignes = cur.fetchall()
             colonnes = [desc[0] for desc in cur.description]
 
             with open(path, "w", newline="", encoding="utf-8-sig") as f:
                 writer = csv.writer(f, delimiter=";")
                 writer.writerow(colonnes)  # Écrit les colonnes
-                writer.writerows(lignes)    # Écrit toutes les lignes d'un coup
+                writer.writerows(lignes)    # Écrit toutes les lignes
 
-        print(f"\n✅ Terminé ! {len(lignes)} lignes dans {path}")
+        print(f"Terminé ! {len(lignes)} lignes dans {path}")
 
     except Exception as e:
         print(f"[ERREUR] : {e}")
