@@ -1,8 +1,19 @@
 import nmap, winrm, paramiko, warnings, getpass, mysql.connector, os, re
 from dotenv import load_dotenv
 load_dotenv()
+from maj_referentiel import maj_referentiel
 # Ignore les erreurs
 warnings.filterwarnings("ignore")
+
+maj = input("Voulez-vous faire une MàJ du référentiel End Of Life de la BDD ? [Y/n] ").strip().lower()
+
+if maj in ('y', 'yes', ''):
+    maj_referentiel()
+elif maj in ('n', 'no'):
+    print("Mise à jour non effectuée.")
+else:
+    print("Mauvaise saisie, fin du script.")
+    exit()
 
 def extraire_regex(pattern, texte):
     match = re.search(pattern, texte)
