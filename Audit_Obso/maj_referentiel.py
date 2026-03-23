@@ -1,19 +1,12 @@
-import mysql.connector, os, requests, time
+import mysql.connector, os, requests
 from dotenv import load_dotenv
+
 load_dotenv()
 
 host = os.getenv('DB_HOST')
 user = os.getenv('DB_USER')
 password = os.getenv('DB_MDP')
 database = os.getenv('DB_NAME')
-
-def nettoyer_nom_version(v):
-    if not v: return v
-    v = str(v).lower()
-    # On coupe au premier tiret pour enlever -r2, -sac, -sp1
-    v = v.split('-')[0]
-    # On enlève les espaces inutiles
-    return v.strip()
 
 def maj_referentiel():
     print("Synchronisation EOL")
@@ -37,12 +30,8 @@ def maj_referentiel():
 
             if res.status_code == 200:
                 for entry in res.json():
-                    # Nettoyage du cycle (Ex: 2012-r2 devient 2012)
-                    v_majeure = nettoyer_nom_version(entry.get('cycle'))
-
-                    # Le build/release (Ex: 10.0.20348 ou 20.04.6)
+                    v_majeure = str(entry.get('cycle', ''))
                     v_detail = str(entry.get('latest', ''))
-
                     date_eol = entry.get('eol')
 
                     if date_eol and date_eol is not False:
@@ -57,10 +46,9 @@ def maj_referentiel():
 
                 db.commit()
                 print(f"[OK] {db_os_name} mis à jour.")
-            time.sleep(0.5)
 
         db.close()
-        print("\n[SUCCÈS] Ton référentiel est maintenant compatible avec tes scans.")
+        print("\n[SUCCÈS] Le référentiel EOL est à jour.")
 
     except Exception as e:
         print(f"Erreur : {e}")
