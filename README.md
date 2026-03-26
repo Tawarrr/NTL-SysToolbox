@@ -1,6 +1,6 @@
 # NTL-SysToolbox
 
-⚡ Outil Python permettant de lancer au choix 1 des 3 modules codés (Diagnostic, Backup/Export, Audit d'obsolescence) et sortir des résultats en fin de script.
+Outil Python permettant de lancer au choix 1 des 3 modules codés (Diagnostic, Backup/Export, Audit d'obsolescence) et sortir des résultats en fin de script.
 
 ## Ce que ça fait ##
 
