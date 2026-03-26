@@ -82,3 +82,5 @@ se rendre sur l'appli `VMware Workstation Pro --> Clic droit --> Ouvrir`
 se rendre dans le dossier :
 `Vagrant --> .vagrant --> machines --> {machine_au_choix} --> vmware_desktop --> {id_machine} --> {machine_au_choix}.vmx`
 
+(les identifiants + Mot de passe sont spécifiés dans le .env du **`Vagrant.zip`**)
+
