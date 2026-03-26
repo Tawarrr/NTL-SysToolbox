@@ -1,15 +1,15 @@
-# 🧰 NTL-SysToolbox
+# NTL-SysToolbox
 
 ⚡ Outil Python permettant de lancer au choix 1 des 3 modules codés (Diagnostic, Backup/Export, Audit d'obsolescence) et sortir des résultats en fin de script.
 
-##    Ce que ça fait   ##
+## Ce que ça fait ##
 
-- 🩺 **Diagnostic** : Check ressources des serveurs, services AD/DNS, MySQL
-- 💾 **Backup** : sauvegardes horodatées vers un répertoire cible (Table ou Base complète)
-- 🧾 **Audit** : collecte d’infos + export pour reporting
+- **Diagnostic** : Check ressources des serveurs, services AD/DNS, MySQL
+- **Backup** : sauvegardes horodatées vers un répertoire cible (Table ou Base complète)
+- **Audit** : collecte d’infos + export pour reporting
 
-## 🛠️ Installation
-📌 Pré-requis : Python3 minimum
+##Installation
+Pré-requis : Python3 minimum
 
 ```bash
 git clone https://github.com/Tawarrr/NTL-SysToolbox.git
