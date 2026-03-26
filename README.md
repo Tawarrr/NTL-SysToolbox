@@ -1,15 +1,15 @@
 # 🧰 NTL-SysToolbox
 
-⚡ CLI Python pour regrouper des actions d’exploitation (diagnostic, backup, audit) et sortir des résultats clairs + des rapports (JSON/CSV) réutilisables.
+⚡ Outil Python permettant de lancer au choix 1 des 3 modules codés (Diagnostic, Backup/Export, Audit d'obsolescence) et sortir des résultats en fin de script.
 
 ##    Ce que ça fait   ##
 
-- 🩺 **Diagnostic** : checks réseau/services (DNS, ports, endpoints, etc.)
-- 💾 **Backup** : sauvegardes horodatées vers un répertoire cible
+- 🩺 **Diagnostic** : Check ressources des serveurs, services AD/DNS, MySQL
+- 💾 **Backup** : sauvegardes horodatées vers un répertoire cible (Table ou Base complète)
 - 🧾 **Audit** : collecte d’infos + export pour reporting
 
 ## 🛠️ Installation
-📌 Pré-requis : Python 3.10+
+📌 Pré-requis : Python3 minimum
 
 ```bash
 git clone https://github.com/Tawarrr/NTL-SysToolbox.git
@@ -22,29 +22,25 @@ cd NTL-SysToolbox
 python3 -m venv .venv
 source .venv/bin/activate
 ```
-#### Installer les dépendandes avec le fichier `requirements.txt`
+#### Installer les dépendances avec le fichier `requirements.txt`
 ```bash
 pip install -r requirements.txt
 ```
 
 
 # Sur Windows (PowerShell)
-#### Installer venv
-#### Installer pip
+#### Installer venv (installé de base avec python sur Windows)
+#### Installer pip (installé de base avec python sur Windows)
 
 ```powershell
-python3 -m venv .venv
-`.\.venv\Scripts\Activate.ps1`
+py -m venv .venv
+**.\.venv\Scripts\Activate.ps1**
 ```
-#### Installer les dépendandes avec le fichier `requirements.txt`
+#### Installer les dépendances avec le fichier `requirements.txt`
 ```powershell
 pip install -r requirements.txt
 ```
 
+## Pour le bon fonctionnement du script, penser à remplir les variables du .env fourni, permettant les connexions aux machines et à la bdd.
 
-# Sur les deux
-```bash
-pip install -U pip
-pip install -e .
-``
 
