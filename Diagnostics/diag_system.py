@@ -1,7 +1,4 @@
-import sys
-import platform
-import os
-
+import sys, platform, os, subprocess
 def main():
     """Fonction principale du diagnostic"""
     subprocess.run('cls' if os.name == 'nt' else 'clear', shell=True)
