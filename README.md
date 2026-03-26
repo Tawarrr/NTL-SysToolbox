@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 ```powershell
 py -m venv .venv
-**.\.venv\Scripts\Activate.ps1**
+.\.venv\Scripts\Activate.ps1
 ```
 #### Installer les dépendances avec le fichier `requirements.txt`
 ```powershell
