@@ -23,13 +23,19 @@ def main():
             print("\n--- Lancement : Sauvegarde SQL ---\n")
             # Importation depuis Sauv_wms/sauv_bdd/sauv_bdd.py
             from sauv_bdd.sauv_bdd import sauvegarder_bdd_sql
-            return sauvegarder_bdd_sql()
+            res = sauvegarder_bdd_sql()
+            if res is False or res is None:
+                sys.exit(1)
+            return res
 
         elif choice == "2":
             print("\n--- Lancement : Sauvegarde CSV ---\n")
             # Importation depuis Sauv_wms/sauv_tab/sauv_tab.py
             from sauv_tab.sauv_tab import save_table_to_CSV
-            return save_table_to_CSV()
+            res = save_table_to_CSV()
+            if res is False or res is None:
+                sys.exit(1)
+            return res
 
         elif choice == "3":
             return
@@ -40,6 +46,6 @@ def main():
 
     except Exception as e:
         print(f"Erreur lors de l'appel du module : {e}")
-
+        sys.exit(1)
 if __name__ == "__main__":
     main()
