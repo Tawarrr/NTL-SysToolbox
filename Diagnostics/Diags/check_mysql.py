@@ -23,22 +23,26 @@ def test_mysql_connection():
 
         # Utilisation d'un curseur pour récupérer les infos
         with connection.cursor() as cursor:
-            # Récupérer la base actuelle
             cursor.execute("SELECT DATABASE()")
             db_name = cursor.fetchone()
             print(f"Actuellement connecté à la base : {db_name[0]}")
             print("La base de données MySQL est bien fonctionnelle.")
-
+            return True
     except pymysql.MySQLError as e:
         print(f"\n[!] Erreur PyMySQL : {e}")
+        return False
     except Exception as e:
         print(f"\n[!] Autre erreur : {e}")
-
+        return False
     finally:
-        # On ferme si l'objet connexion a bien été instancié
         if connection:
             connection.close()
             print("\nConnexion MySQL fermée.")
 
 if __name__ == "__main__":
-    test_mysql_connection()
+    diagnostic_reussi = test_mysql_connection()
+    print("\n" + "-"*30)
+    if not diagnostic_reussi:
+        sys.exit(1)
+    else:
+        sys.exit(0)
