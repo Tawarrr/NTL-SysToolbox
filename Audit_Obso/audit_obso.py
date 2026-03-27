@@ -1,4 +1,4 @@
-import nmap, winrm, paramiko, warnings, getpass, mysql.connector, os, re
+import nmap, winrm, sys, paramiko, warnings, getpass, mysql.connector, os, re
 from dotenv import load_dotenv
 load_dotenv()
 from maj_referentiel import maj_referentiel
@@ -8,7 +8,12 @@ warnings.filterwarnings("ignore")
 maj = input("Voulez-vous faire une MàJ du référentiel End Of Life de la BDD ? [Y/n] ").strip().lower()
 
 if maj in ('y', 'yes', ''):
-    maj_referentiel()
+    succes_maj = maj_referentiel()
+    if succes_maj:
+        print("[OK] Référentiel mis à jour avec succès.")
+    else:
+        print("[!] Échec de la mise à jour du référentiel. Suite du script avec les anciennes données.")
+        sys.exit(1)
 elif maj in ('n', 'no'):
     print("Mise à jour non effectuée.")
 else:
