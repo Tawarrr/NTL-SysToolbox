@@ -20,65 +20,86 @@ class CLIInterface:
         print("\n  0. Quitter\n" + "="*60)
 
     def run_script(self, path, title):
-        path = os.path.join(self.base_dir, path)
-        if not os.path.exists(path):
-            print(f"Fichier {path} introuvable")
+        script_path = os.path.join(self.base_dir, path)
+        if not os.path.exists(script_path):
+            print(f"Erreur : Fichier introuvable")
             return
 
-        try:
-            print(f"{title}" + "-"*30)
-            p = subprocess.Popen([sys.executable, path],
-                                 stdout=subprocess.PIPE,
-                                 stderr=subprocess.STDOUT,
-                                 text=True)
+        env = os.environ.copy()
+        env["PYTHONUNBUFFERED"] = "1"
 
-            out = []
-            for line in p.stdout:
-                print(line, end="")
-                out.append(line)
+        try:
+            print(f"\n>>> Lancement de : {title}")
+            print("-" * 30)
+
+            p = subprocess.Popen(
+                [sys.executable, "-u", script_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                env=env,
+                bufsize=0
+            )
+
+            out = ""
+            while True:
+                char = p.stdout.read(1)
+                if not char and p.poll() is not None:
+                    break
+                if char:
+                    print(char, end="", flush=True)
+                    out += char
 
             code = p.wait()
-            self.logjson(title, code, "".join(out))
-            print("-"*30 + "\n>>> Retour menu.")
+            self.logjson(title, code, out)
+
+            print("-" * 30)
+            print(">>> Retour au Menu Principal.")
 
         except KeyboardInterrupt:
-            print("Interruption Ctrl+C. ")
+            print("Interruption du script.")
         except Exception as e:
-            print(f"\n [X] {e}")
+            print(f"Erreur lors du lancement : {e}")
 
     def logjson(self, name, code, output):
         dossier = os.path.join(self.base_dir, "logs")
         os.makedirs(dossier, exist_ok=True)
+
+        # Détection d'erreur dans le texte pour le status
+        status = "OK"
+        if code != 0 or "[!]" in output or "[ERREUR]" in output:
+            status = "ERROR"
 
         ts = datetime.now()
         data = {
             "timestamp": ts.isoformat(),
             "module": name,
             "exit_code": code,
-            "status": "OK" if code == 0 else "ERROR",
+            "status": status,
             "details": output.splitlines()
         }
 
         fichier = f"log_{name.replace(' ','_')}_{ts.strftime('%Y%m%d_%H%M%S')}.json"
-        with open(os.path.join(dossier, fichier), "w", encoding="utf-8") as fileprint:
-            json.dump(data, fileprint, indent=4, ensure_ascii=False)
-
+        with open(os.path.join(dossier, fichier), "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
         print(f"\n[INFO] logs/{fichier}")
 
     def run(self):
         while True:
             self.display_menu()
-            choice = input("Choix : ").strip()
+            choice = input("Sélectionnez une option : ").strip()
 
             if choice == "0":
+                print("\n Au revoir !")
                 break
+
             if not choice.isdigit() or int(choice) not in self.menu_options:
-                input("\n[!] Invalide..."); continue
+                print("\n [!] Choix non valide."); continue
 
             t, p = self.menu_options[int(choice)]
             try:
                 self.run_script(p, t)
-                input("\nEntrée...")
+                input("\nAppuyez sur Entrée pour continuer...")
             except KeyboardInterrupt:
                 sys.exit(0)
 
