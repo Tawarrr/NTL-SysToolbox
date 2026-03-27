@@ -21,12 +21,12 @@ def connect_to_database():
         return conn
     except Exception as e:
         print(f"[ERREUR] : {e}")
-        return None
+        return False
 
 def save_table_to_CSV():
     conn = connect_to_database()
     if not conn:
-        return
+        return False
 
     try:
         # 1. Lister les tables
@@ -41,7 +41,7 @@ def save_table_to_CSV():
         choice = input("\n  Numéro de la table : ").strip()
         if not choice.isdigit() or not (0 < int(choice) <= len(tables)):
             print("Choix invalide.")
-            return
+            return False
 
         table = tables[int(choice) - 1]
 
@@ -61,9 +61,10 @@ def save_table_to_CSV():
                 writer.writerows(lignes)    # Écrit toutes les lignes
 
         print(f"Terminé ! {len(lignes)} lignes dans {path}")
-
+        return True
     except Exception as e:
         print(f"[ERREUR] : {e}")
+        return True
     finally:
         conn.close()
 
