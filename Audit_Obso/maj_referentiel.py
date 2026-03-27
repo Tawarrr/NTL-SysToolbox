@@ -46,12 +46,12 @@ def maj_referentiel():
 
                 db.commit()
                 print(f"[OK] {db_os_name} mis à jour.")
-
+                return True
         db.close()
         print("\n[SUCCÈS] Le référentiel EOL est à jour.")
-
+        return True
     except Exception as e:
         print(f"Erreur : {e}")
-
+        return False
 if __name__ == "__main__":
     maj_referentiel()
