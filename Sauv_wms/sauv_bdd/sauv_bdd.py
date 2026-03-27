@@ -27,7 +27,7 @@ def connect_to_database():
 def sauvegarder_bdd_sql():
     conn, nom_bd = connect_to_database()
     if not conn:
-        return
+        return False
 
     #Préparation du fichier de sortie
     dossier = "backups_sql"
@@ -75,9 +75,10 @@ def sauvegarder_bdd_sql():
             f.write("\nSET FOREIGN_KEY_CHECKS = 1;")
 
         print(f"Sauvegarde réussie : {chemin_complet}")
-
+        return True
     except Exception as e:
         print(f"Erreur pendant l'export : {e}")
+        return False
     finally:
         if conn:
             conn.close()
